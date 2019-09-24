@@ -9,7 +9,8 @@ matThick = 3  # flat stock thickness
 tabWidth = matThick
 targetTabLength = 15
 slop = 0.1 # a value to add to things to not have thin walls
-kerf = 0.18  # the amount the laser removes
+wood_kerf = 0.23  # the amount the laser removes
+acrylic_kerf = 0.11  # the amount the laser removes
 cutout_margin = 3
 cutout_page_margin = 3
 
@@ -36,8 +37,8 @@ class Box():
     tabLength = width/(tabNum + (1 if tabNum % 2 == 0 else 0))
     start = tabLength if invert else 0
     return difference()(
-      forward(kerf if inside else 0)(square([width, tabWidth- (kerf*2 if inside else kerf)])),
-      *[translate([xOffset - kerf * 1.25/2, 0])(square([tabLength + kerf * 1.25, tabWidth + kerf * 2]))
+      forward(wood_kerf if inside else 0)(square([width, tabWidth- (wood_kerf*2 if inside else wood_kerf)])),
+      *[translate([xOffset - wood_kerf * 1.25/2, 0])(square([tabLength + wood_kerf * 1.25, tabWidth + wood_kerf * 2]))
        for xOffset in np.arange(start, width, tabLength * 2)])
 
   def panel_cutout(self, base, cutout):
@@ -55,8 +56,9 @@ class Box():
         offset(cutout_margin)(
           acrylic_pieces
         ),
-        debug(acrylic_pieces)
-      )
+        debug(
+          offset(-(wood_kerf + acrylic_kerf) / 2)(
+            acrylic_pieces)))
     )
 
   def panel(self, width, length, invert_sides, cutout):
