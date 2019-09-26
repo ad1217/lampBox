@@ -5,11 +5,11 @@ from solid.utils import *
 import math
 import numpy as np
 
-matThick = 3  # flat stock thickness
+matThick = 3.4  # flat stock thickness
 tabWidth = matThick
 targetTabLength = 15
 slop = 0.1 # a value to add to things to not have thin walls
-wood_kerf = 0.23  # the amount the laser removes
+wood_kerf = 0.13  # the amount the laser removes
 acrylic_kerf = 0.11  # the amount the laser removes
 cutout_margin = 3
 cutout_page_margin = 3
