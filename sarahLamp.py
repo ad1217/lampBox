@@ -103,6 +103,16 @@ class Box():
       right(self.width + separation)(panels["right"]),
       forward(self.length + separation)(panels["back"]))
 
+  def toFlatStrip(self, separation=0.5):
+    panels = self.color_panels(self.box_panels)
+
+    return union()(
+      panels["top"],
+      right(self.width + separation)(panels["left"]),
+      right((self.width + separation)*2)(panels["front"]),
+      right((self.width + separation)*3)(panels["right"]),
+      right((self.width + separation)*4)(panels["back"]))
+
 cutouts = {
     "top": "drawing.dxf",
     "left": "lamp-091619",
@@ -113,4 +123,5 @@ cutouts = {
 
 b = Box(150, 150, 200, cutouts)
 scad_render_to_file(b.toFlat(), "laserBox.scad")
+scad_render_to_file(b.toFlatStrip(), "laserBoxStrip.scad")
 scad_render_to_file(b.to3d(), "laserBox3d.scad")
